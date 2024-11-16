@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Login to Sijarta</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div>
+    <div>
+        <h2>Login to Your Account</h2>
+    <div>
+    <form method="POST">
+        <div>
+            <label>Telephone Number</label>
+            <input type="text">
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="password">
+        </div>
+    </form>
+</div>
+
+{% endblock content %}
