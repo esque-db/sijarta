@@ -1,4 +1,4 @@
-{% include 'navbar_pengguna.html' %}
+{% include 'navbar_pekerja.html' %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,7 +24,7 @@
             <h2>{{ kategori }}</h2>
             <ul>
                 {% for subkategori in subkategoris %}
-                    <li><a href="{% url 'hijau:subkategori' kategori=kategori subkategori=subkategori %}">{{ subkategori }}</a></li>
+                    <li><a href="{% url 'hijau:subkategoripekerja' kategori=kategori subkategori=subkategori%}">{{ subkategori }}</a></li>
                 {% endfor %}
             </ul>
         </div>

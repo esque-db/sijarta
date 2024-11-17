@@ -28,6 +28,33 @@ def homepage(request):
     }
     return render(request, 'homepage.html', context)
 
+def homepage_pekerja(request):
+    # Hardcode data for categories and subcategories
+    data = {
+        'Kategori Jasa 1': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
+        'Kategori Jasa 2': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
+        'Kategori Jasa 3': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
+    }
+
+    # Filter data based on query parameters
+    kategori_filter = request.GET.get('kategori')
+    subkategori_filter = request.GET.get('subkategori')
+
+    if kategori_filter:
+        data = {k: v for k, v in data.items() if k == kategori_filter}
+
+    if subkategori_filter:
+        data = {k: [sub for sub in v if subkategori_filter.lower() in sub.lower()] for k, v in data.items()}
+
+    # Pass the category names for the dropdown
+    kategori_list = list(data.keys())
+
+    context = {
+        'data': data,
+        'kategori_list': ['Kategori Jasa 1', 'Kategori Jasa 2', 'Kategori Jasa 3']
+    }
+    return render(request, 'homepage_pekerja.html', context)
+
 DATA = {
     'Kategori Jasa 1': {
         'Subkategori Jasa 1': {
