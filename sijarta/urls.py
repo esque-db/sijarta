@@ -20,7 +20,7 @@ from django.views.generic import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', RedirectView.as_view(pattern_name='kuning:login', permanent=False)), # Redirects base url to login page
+    path('', RedirectView.as_view(pattern_name='kuning:landing', permanent=False)), # Redirects base url to login page
     path('kuning/', include('kuning.urls')),
     path('hijau/', include('hijau.urls')),
     path('biru/', include('biru.urls')),

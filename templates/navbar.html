@@ -5,7 +5,7 @@
     </div>
     <div>
       {% if user.is_authenticated %}
-          {% if user.is_staff %}
+          {% if user.is_pekerja %}
               <!-- Navbar for Pekerja -->
               <a href='#'>Role: Pekerja</a>
               <a href='#'>{{ user.username }}</a>
@@ -14,7 +14,7 @@
               <a href='#'>Kelola Status Pekerjaan</a>
               <a href='#'>MyPay</a>
               <a href='#'>Profile</a>
-              <a href='#'>Logout</a>
+              <a href='{% url 'kuning:logout' %}'>Logout</a>
           {% else %}
               <!-- Navbar for Pengguna -->
               <a href='#'>Role: Pengguna</a>
@@ -24,12 +24,12 @@
               <a href='#'>Kelola Pesanan Saya</a>
               <a href='#'>Diskon</a>
               <a href='#'>Profile</a>
-              <a href='#'>Logout</a>
+              <a href='{% url 'kuning:logout' %}'>Logout</a>
           {% endif %}
       {% else %}
           <!-- Navbar for Guest -->
-          <a href={% url 'kuning:login' %}>Login</a>
-          <a href={% url 'kuning:register' %}>Register</a>
+          <a href='{% url 'kuning:login' %}'>Login</a>
+          <a href='{% url 'kuning:register' %}'>Register</a>
       {% endif %}
     </div>
   </div>

@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
     'kuning',
     'hijau',
     'biru',
@@ -128,6 +127,9 @@ if DEBUG:
     ]
 else:
     STATIC_ROOT = BASE_DIR / 'static'  # merujuk ke /static root project pada mode production
+
+# Login URL configuration
+LOGIN_URL = 'kuning:login'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field

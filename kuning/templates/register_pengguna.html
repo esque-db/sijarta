@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block meta %}
-<title>Register to Sijarta</title>
+<title>Register</title>
 {% endblock meta %}
 
 {% block content %}
@@ -12,13 +12,18 @@
         <h2>Make an User Account</h2>
     <div>
     <form method="POST">
+        {% csrf_token %}
         <div>
             <label>Nama</label>
-            <input type="text" name="nama">
+            <input type="text" name="username" required>
         </div>
         <div>
             <label>Password</label>
-            <input type="password" name="password">
+            <input type="password" name="password1" required>
+        </div>
+        <div>
+            <label>Confirm Password</label>
+            <input type="password" name="password2" required>
         </div>
         <div>
             <label>Jenis Kelamin</label>
@@ -41,5 +46,10 @@
             <button type="submit">Register</button>
         </div>
     </form>
+    {% if messages %}
+        {% for message in messages %}
+            <div>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
 </div>
 {% endblock content %}

@@ -2,23 +2,33 @@
 {% load static %}
 
 {% block meta %}
-<title>Register</title>
+<title>Registration Form</title>
 {% endblock meta %}
 
 {% block content %}
 {% include 'navbar.html' %}
 <div>
-    <div>
-        <h2>Make an Account</h2>
-    <div>
+    <h2>Create Your Account</h2>
     <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="role" value="{{ role }}">
+        
+        <!-- Common Fields -->
         <div>
-            <label>Nama</label>
-            <input type="text" name="nama">
+            <label>Username</label>
+            <input type="text" name="username" required>
         </div>
         <div>
             <label>Password</label>
-            <input type="password" name="password">
+            <input type="password" name="password1" required>
+        </div>
+        <div>
+            <label>Confirm Password</label>
+            <input type="password" name="password2" required>
+        </div>
+        <div>
+            <label>Nama</label>
+            <input type="text" name="nama">
         </div>
         <div>
             <label>Jenis Kelamin</label>
@@ -37,6 +47,9 @@
             <label>Alamat</label>
             <input type="text" name="alamat">
         </div>
+
+        <!-- Pekerja-specific fields -->
+        {% if role == 'pekerja' %}
         <div>
             <label>Nama Bank</label>
             <select name="nama_bank">
@@ -59,6 +72,8 @@
             <label>URL Foto</label>
             <input type="text" name="url_foto">
         </div>
+        {% endif %}
+
         <div>
             <button type="submit">Register</button>
         </div>

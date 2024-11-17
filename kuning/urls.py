@@ -7,6 +7,8 @@ urlpatterns = [
     path('landing/', show_landing_page, name='landing'),
     path('login/', login_user, name='login'),
     path('register/', register, name='register'),
-    path('register/pengguna/', register_pengguna, name='register_pengguna'),
-    path('register/pelanggan/', register_pekerja, name='register_pekerja'),
+    path('register/form/', register_form, name='register_form'),
+    path('profile/', profile, name='profile'),
+    path('profile/update/', profile_form, name='profile_form'),
+    path('logout/', logout_user, name='logout'),
 ]

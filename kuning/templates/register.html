@@ -8,12 +8,20 @@
 {% block content %}
 {% include 'navbar.html' %}
 <div>
-    <div>
-        <h2>Make an Account</h2>
-    <div>
-    <button onclick="location.href='{% url 'kuning:register_pengguna' %}'">Pengguna</button>
-    <button onclick="location.href='{% url 'kuning:register_pekerja' %}'">Pekerja</button>
-    </div>
+    <h2>Choose Account Type</h2>
+    <form method="POST" action="{% url 'kuning:register_form' %}">
+        {% csrf_token %}
+        <div>
+            <label>
+                <input type="radio" name="role" value="pengguna" checked> Pengguna
+            </label>
+            <label>
+                <input type="radio" name="role" value="pekerja"> Pekerja
+            </label>
+        </div>
+        <div>
+            <button type="submit">Continue</button>
+        </div>
+    </form>
 </div>
-
 {% endblock content %}
