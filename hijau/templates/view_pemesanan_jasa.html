@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Pemesanan Jasa</title>
+</head>
+<body>
+    <h1>View Pemesanan Jasa</h1>
+
+    <!-- Filter -->
+    <div>
+        <label for="filter_subkategori">Subkategori:</label>
+        <select id="filter_subkategori" name="filter_subkategori">
+            <option value="">Semua</option>
+            {% for subkategori in subkategori_list %}
+                <option value="{{ subkategori }}">{{ subkategori }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="filter_status">Status Pesanan:</label>
+        <select id="filter_status" name="filter_status">
+            <option value="">Semua</option>
+            <option value="Menunggu Pembayaran">Menunggu Pembayaran</option>
+            <option value="Mencari Pekerja Terdekat">Mencari Pekerja Terdekat</option>
+            <option value="Pesanan Selesai">Pesanan Selesai</option>
+        </select>
+
+        <button onclick="applyFilters()">Search</button>
+    </div>
+
+    <!-- Daftar Pesanan -->
+    <table border="1" style="width: 100%; text-align: left;">
+        <thead>
+            <tr>
+                <th>Subkategori Jasa</th>
+                <th>Sesi Layanan</th>
+                <th>Harga</th>
+                <th>Nama Pekerja</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for pesanan in daftar_pesanan %}
+                <tr>
+                    <td>{{ pesanan.subkategori }}</td>
+                    <td>{{ pesanan.sesi_layanan }}</td>
+                    <td>Rp {{ pesanan.harga }}</td>
+                    <td>{{ pesanan.nama_pekerja }}</td>
+                    <td>{{ pesanan.status }}</td>
+                    <td>
+                        {% if pesanan.status == "Menunggu Pembayaran" or pesanan.status == "Mencari Pekerja Terdekat" %}
+                            <button onclick="batalkanPesanan({{ pesanan.id }})">Batalkan</button>
+                        {% elif pesanan.status == "Pesanan Selesai" and not pesanan.testimoni_dibuat %}
+                            <button onclick="buatTestimoni({{ pesanan.id }})">Buat Testimoni</button>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function applyFilters() {
+        const subkategori = document.getElementById('filter_subkategori').value;
+        const status = document.getElementById('filter_status').value;
+
+        // Kirim request ke backend menggunakan AJAX
+        const url = new URL(window.location.href);
+        url.searchParams.set('subkategori', subkategori);
+        url.searchParams.set('status', status);
+
+        // Reload halaman dengan filter yang diterapkan
+        window.location.href = url;
+    }
+
+        function batalkanPesanan(pesananId) {
+            if (confirm('Anda yakin ingin membatalkan pesanan ini?')) {
+                // Kirim permintaan pembatalan ke backend
+                alert('Pesanan ' + pesananId + ' dibatalkan.');
+            }
+        }
+
+        function buatTestimoni(pesananId) {
+            // Redirect ke halaman pembuatan testimoni
+            window.location.href = `/buat-testimoni/${pesananId}/`;
+        }
+    </script>
+</body>
+</html>
