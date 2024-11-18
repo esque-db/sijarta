@@ -1,14 +1,15 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
+data_global = {
+    'Kategori Jasa 1': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
+    'Kategori Jasa 2': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
+    'Kategori Jasa 3': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
+}
 
 def homepage(request):
     # Hardcode data for categories and subcategories
-    data = {
-        'Kategori Jasa 1': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
-        'Kategori Jasa 2': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
-        'Kategori Jasa 3': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
-    }
-
+    data = data_global
     # Filter data based on query parameters
     kategori_filter = request.GET.get('kategori')
     subkategori_filter = request.GET.get('subkategori')
@@ -20,7 +21,7 @@ def homepage(request):
         data = {k: [sub for sub in v if subkategori_filter.lower() in sub.lower()] for k, v in data.items()}
 
     # Pass the category names for the dropdown
-    kategori_list = list(data.keys())
+    # kategori_list = list(data.keys())
 
     context = {
         'data': data,
@@ -30,12 +31,7 @@ def homepage(request):
 
 def homepage_pekerja(request):
     # Hardcode data for categories and subcategories
-    data = {
-        'Kategori Jasa 1': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
-        'Kategori Jasa 2': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
-        'Kategori Jasa 3': ['Subkategori Jasa 1', 'Subkategori Jasa 2', 'Subkategori Jasa 3'],
-    }
-
+    data = data_global
     # Filter data based on query parameters
     kategori_filter = request.GET.get('kategori')
     subkategori_filter = request.GET.get('subkategori')
@@ -192,7 +188,15 @@ def profil_pekerja(request, pekerja_id):
     return render(request, 'profil_pekerja.html', context)
 
 def pesan_jasa(request):
+    daftar_pesanan = daftar_pesanan_global
+    subkategori_list = subkategori_list_global
     if request.method == 'POST':
+        layanan_nama = request.POST.get('layanan_nama')  # Periksa layanan_nama
+        layanan_harga = request.POST.get('layanan_harga')  # Periksa layanan_harga
+
+        if not layanan_nama or not layanan_harga:
+            messages.error(request, 'Data layanan tidak lengkap.')
+            return redirect('hijau:view_pemesanan_jasa')
         tanggal_pemesanan = request.POST.get('tanggal_pemesanan')
         kode_diskon = request.POST.get('kode_diskon', '')
         total_pembayaran = 100000  # Contoh angka default (bisa diambil dari database)
@@ -203,8 +207,17 @@ def pesan_jasa(request):
 
         metode_pembayaran = request.POST.get('metode_pembayaran')
 
-        # Simpan ke database atau proses lainnya
-        # ... (Tambahkan logika penyimpanan di sini)
+        pesanan_baru = {
+            'id': len(daftar_pesanan) + 1,  # ID otomatis
+            'subkategori': layanan_nama,
+            'sesi_layanan': 'Paket Custom',  # Bisa diganti sesuai kebutuhan
+            'harga': total_pembayaran,
+            'nama_pekerja': None,  # Belum ada pekerja
+            'status': 'Menunggu Pembayaran',
+            'testimoni_dibuat': False,
+        }
+        daftar_pesanan.append(pesanan_baru)
+        subkategori_list.append(pesanan_baru['subkategori'])
 
         # Pesan sukses dan redirect ke halaman View Pemesanan Jasa
         messages.success(request, 'Pesanan jasa berhasil dibuat!')
@@ -212,39 +225,42 @@ def pesan_jasa(request):
 
     return render(request, 'pesan_jasa.html')
 
+
+subkategori_list_global = ['Cleaning Service', 'Laundry', 'Tukang Kebun']
+daftar_pesanan_global = [
+    {
+        'id': 1,
+        'subkategori': 'Cleaning Service',
+        'sesi_layanan': 'Paket Harian',
+        'harga': 100000,
+        'nama_pekerja': 'John Doe',
+        'status': 'Menunggu Pembayaran',
+        'testimoni_dibuat': False,
+    },
+    {
+        'id': 2,
+        'subkategori': 'Laundry',
+        'sesi_layanan': 'Paket Mingguan',
+        'harga': 150000,
+        'nama_pekerja': 'Jane Smith',
+        'status': 'Pesanan Selesai',
+        'testimoni_dibuat': False,
+    },
+    {
+        'id': 3,
+        'subkategori': 'Tukang Kebun',
+        'sesi_layanan': 'Paket Bulanan',
+        'harga': 200000,
+        'nama_pekerja': None,
+        'status': 'Mencari Pekerja Terdekat',
+        'testimoni_dibuat': False,
+    },
+]
+
 def view_pemesanan_jasa(request):
     # Contoh data dummy untuk pemesanan
-    subkategori_list = ['Cleaning Service', 'Laundry', 'Tukang Kebun']
-    daftar_pesanan = [
-        {
-            'id': 1,
-            'subkategori': 'Cleaning Service',
-            'sesi_layanan': 'Paket Harian',
-            'harga': 100000,
-            'nama_pekerja': 'John Doe',
-            'status': 'Menunggu Pembayaran',
-            'testimoni_dibuat': False,
-        },
-        {
-            'id': 2,
-            'subkategori': 'Laundry',
-            'sesi_layanan': 'Paket Mingguan',
-            'harga': 150000,
-            'nama_pekerja': 'Jane Smith',
-            'status': 'Pesanan Selesai',
-            'testimoni_dibuat': False,
-        },
-        {
-            'id': 3,
-            'subkategori': 'Tukang Kebun',
-            'sesi_layanan': 'Paket Bulanan',
-            'harga': 200000,
-            'nama_pekerja': None,
-            'status': 'Mencari Pekerja Terdekat',
-            'testimoni_dibuat': False,
-        },
-    ]
-
+    subkategori_list = subkategori_list_global
+    daftar_pesanan = daftar_pesanan_global
     subkategori_filter = request.GET.get('subkategori', '')
     status_filter = request.GET.get('status', '')
 
@@ -259,3 +275,20 @@ def view_pemesanan_jasa(request):
         'subkategori_list': subkategori_list,
     }
     return render(request, 'view_pemesanan_jasa.html', context)
+
+def bergabung_subkategori(request, kategori, subkategori):
+    if request.method == 'POST':
+        if kategori in DATA and subkategori in DATA[kategori]:
+            subkategori_data = DATA[kategori][subkategori]
+            
+            # Periksa apakah pekerja sudah bergabung
+            joined = any(worker['id'] == request.user.id for worker in subkategori_data['pekerja'])
+            
+            if not joined:
+                # Tambahkan user ke daftar pekerja
+                subkategori_data['pekerja'].append({'id': request.user.id, 'name': request.user.username})
+                return JsonResponse({'success': True, 'message': 'Anda berhasil bergabung!'})
+            
+            return JsonResponse({'success': False, 'message': 'Anda sudah bergabung!'})
+        return JsonResponse({'success': False, 'message': 'Subkategori tidak ditemukan!'})
+    return JsonResponse({'success': False, 'message': 'Permintaan tidak valid!'})
