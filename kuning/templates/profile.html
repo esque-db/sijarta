@@ -51,9 +51,47 @@
             <td><label>{{ user.balance }}</label></td>
         </tr>
         <tr>
-            <td colspan="2"><button type="button" onclick="location.href='{% url 'kuning:update_pengguna' %}'">Update</button></td>
+            <td colspan="2"><button type="button" onclick="location.href=''">Update</button></td>
         </tr>
     </table>
+</div>
+
+<div class="flex items-center justify-center">
+    <div class="flex flex-col items-center bg-white px-6 py-2 gap-2 w-full">
+        <h1 class="text-xl font-bold">PROFIL PEKERJA</h1>
+        <div class="avatar">
+            <!-- Gambar avatar pekerja -->
+            <img src="https://via.placeholder.com/100" alt="Avatar">
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Role</div>
+            <div class="">{% if user.is_pekerja %}Pekerja{% else %}Pengguna{% endif %}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Nama</div>
+            <div class="">{{ pekerja.username }}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Rating</div>
+            <div class="">{{ pekerja.rating }}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Jumlah Pesanan Selesai</div>
+            <div class="">{{ pekerja.pesanan_selesai }}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">No HP</div>
+            <div class="">{{ pekerja.no_hp }}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Tanggal Lahir</div>
+            <div class="">{{ pekerja.tanggal_lahir }}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Alamat</div>
+            <div class="">{{ pekerja.alamat }}</div>
+        </div>
+    </div>
 </div>
 
 {% endblock content %}

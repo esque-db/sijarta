@@ -11,29 +11,29 @@
   <div class="mb-8">
     <h2 class="text-2xl font-semibold mb-4">Voucher</h2>
     <div class="overflow-x-auto">
-      <table class="table-auto border-collapse w-full text-left">
+      <table class="table">
         <thead>
-          <tr class="bg-gray-100 border-b">
-            <th class="px-4 py-2">Kode</th>
-            <th class="px-4 py-2">Potongan</th>
-            <th class="px-4 py-2">Harga</th>
-            <th class="px-4 py-2"></th>
+          <tr>
+            <th>Kode</th>
+            <th>Potongan</th>
+            <th>Harga</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
           {% for v in vouchers %}
-          <tr class="border-b hover:bg-gray-50">
-            <td class="px-4 py-2">{{ v.kode }}</td>
-            <td class="px-4 py-2">{{ v.diskon }}</td>
-            <td class="px-4 py-2">Rp{{ v.harga }}</td>
-            <td class="px-4 py-2">
+          <tr>
+            <td>{{ v.kode }}</td>
+            <td>{{ v.diskon }}</td>
+            <td>Rp {{ v.harga }}</td>
+            <td>
               <form action="{% url 'voucher_buy' v.id %}" method="post">
                 {% csrf_token %}
                 <button
                   type="submit"
-                  class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                  class="btn btn-secondary"
                 >
-                  Beli
+                  Beli Voucher
                 </button>
               </form>
             </td>
@@ -48,18 +48,18 @@
   <div>
     <h2 class="text-2xl font-semibold mb-4">Promo</h2>
     <div class="overflow-x-auto">
-      <table class="table-auto border-collapse w-full text-left">
+      <table class="table">
         <thead>
-          <tr class="bg-gray-100 border-b">
-            <th class="px-4 py-2">Kode</th>
-            <th class="px-4 py-2">Tanggal Akhir Berlaku</th>
+          <tr>
+            <th>Kode</th>
+            <th>Tanggal Akhir Berlaku</th>
           </tr>
         </thead>
         <tbody>
           {% for p in promos %}
-          <tr class="border-b hover:bg-gray-50">
-            <td class="px-4 py-2">{{ p.kode }}</td>
-            <td class="px-4 py-2">{{ p.tanggal_akhir }}</td>
+          <tr>
+            <td>{{ p.kode }}</td>
+            <td>{{ p.tanggal_akhir }}</td>
           </tr>
           {% endfor %}
         </tbody>
@@ -103,6 +103,12 @@
     >
       Button Tutup
     </button>
+  </div>
+</div>
+
+<div class="toast">
+  <div class="alert alert-success">
+    <span>Pembelian voucher berhasil!</span>
   </div>
 </div>
 

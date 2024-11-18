@@ -65,12 +65,22 @@ def register_form(request):
         
     return render(request, 'register_form.html', {'role': request.GET.get('role', 'pengguna')})
 
-@login_required
+# @login_required
 def profile(request):
     # Add these flags to determine user type
-    request.user.is_pekerja = request.user.is_staff
-    request.user.is_pengguna = not request.user.is_staff
-    return render(request, 'profile.html', {'user': request.user})
+    # request.user.is_pekerja = request.user.is_staff
+    # request.user.is_pengguna = not request.user.is_staff
+    user = {
+        "is_pekerja": False,
+        "username": "FrankyRayMS",
+        "level": 1,
+        "gender": "Laki-Laki",
+        "phone": "081234567890",
+        "birth_date": "10-10-2010",
+        "address": "Bogor",
+        "balance": "Rp 123.456,78"
+    }
+    return render(request, 'profile.html', {'user': user})
 
 def profile_form(request):
     if not request.user.is_authenticated:
