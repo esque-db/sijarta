@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Profile</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div>
+    <div>
+        <h2>Your Profile</h2>
+    </div>
+    <table>
+        <tr>
+            <td><label>Role</label></td>
+            <td><label>{% if user.is_pekerja %}Pekerja{% else %}Pengguna{% endif %}</label></td>
+        </tr>
+        <tr>
+            <td><label>Nama</label></td>
+            <td><label>{{ user.username }}</label></td>
+        </tr>
+        <tr>
+            <td><label>Level</label></td>
+            <td><label>{{ user.level }}</label></td>
+        </tr>
+        <tr>
+            <td><label>Jenis Kelamin</label></td>
+            <td><label>{{ user.gender }}</label></td>
+        </tr>
+        <tr>
+            <td><label>NoHP</label></td>
+            <td><label>{{ user.phone }}</label></td>
+        </tr>
+        <tr>
+            <td><label>Tanggal Lahir</label></td>
+            <td><label>{{ user.birth_date }}</label></td>
+        </tr>
+        <tr>
+            <td><label>Alamat</label></td>
+            <td><label>{{ user.address }}</label></td>
+        </tr>
+        {% if user.is_pekerja %}
+        <tr>
+            <td><label>NPWP</label></td>
+            <td><label>{{ user.npwp }}</label></td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td><label>Saldo Mypay</label></td>
+            <td><label>{{ user.balance }}</label></td>
+        </tr>
+        <tr>
+            <td colspan="2"><button type="button" onclick="location.href='{% url 'kuning:update_pengguna' %}'">Update</button></td>
+        </tr>
+    </table>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Registration Form</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div>
+    <h2>Create Your Account</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="hidden" name="role" value="{{ role }}">
+        
+        <!-- Common Fields -->
+        <div>
+            <label>Username</label>
+            <input type="text" name="username" required>
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="password" name="password1" required>
+        </div>
+        <div>
+            <label>Confirm Password</label>
+            <input type="password" name="password2" required>
+        </div>
+        <div>
+            <label>Nama</label>
+            <input type="text" name="nama">
+        </div>
+        <div>
+            <label>Jenis Kelamin</label>
+            <input type="radio" name="jenis_kelamin" value="L"> L
+            <input type="radio" name="jenis_kelamin" value="P"> P
+        </div>
+        <div>
+            <label>NoHP</label>
+            <input type="text" name="nohp">
+        </div>
+        <div>
+            <label>Tanggal Lahir</label>
+            <input type="date" name="tanggal_lahir">
+        </div>
+        <div>
+            <label>Alamat</label>
+            <input type="text" name="alamat">
+        </div>
+
+        <!-- Pekerja-specific fields -->
+        {% if role == 'pekerja' %}
+        <div>
+            <label>Nama Bank</label>
+            <select name="nama_bank">
+                <option value="GoPay">GoPay</option>
+                <option value="OVO">OVO</option>
+                <option value="Virtual Account BCA">Virtual Account BCA</option>
+                <option value="Virtual Account BNI">Virtual Account BNI</option>
+                <option value="Virtual Account Mandiri">Virtual Account Mandiri</option>
+            </select>
+        </div>
+        <div>
+            <label>No Rekening</label>
+            <input type="text" name="no_rekening">
+        </div>
+        <div>
+            <label>NPWP</label>
+            <input type="text" name="npwp">
+        </div>
+        <div>
+            <label>URL Foto</label>
+            <input type="text" name="url_foto">
+        </div>
+        {% endif %}
+
+        <div>
+            <button type="submit">Register</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

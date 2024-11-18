@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Register</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div>
+    <div>
+        <h2>Make an Account</h2>
+    <div>
+    <form method="POST">
+        <div>
+            <label>Nama</label>
+            <input type="text" name="nama">
+        </div>
+        <div>
+            <label>Password</label>
+            <input type="password" name="password">
+        </div>
+        <div>
+            <label>Jenis Kelamin</label>
+            <input type="radio" name="jenis_kelamin" value="L"> L
+            <input type="radio" name="jenis_kelamin" value="P"> P
+        </div>
+        <div>
+            <label>NoHP</label>
+            <input type="text" name="nohp">
+        </div>
+        <div>
+            <label>Tanggal Lahir</label>
+            <input type="date" name="tanggal_lahir">
+        </div>
+        <div>
+            <label>Alamat</label>
+            <input type="text" name="alamat">
+        </div>
+        <div>
+            <label>Nama Bank</label>
+            <select name="nama_bank">
+                <option value="GoPay">GoPay</option>
+                <option value="OVO">OVO</option>
+                <option value="Virtual Account BCA">Virtual Account BCA</option>
+                <option value="Virtual Account BNI">Virtual Account BNI</option>
+                <option value="Virtual Account Mandiri">Virtual Account Mandiri</option>
+            </select>
+        </div>
+        <div>
+            <label>No Rekening</label>
+            <input type="text" name="no_rekening">
+        </div>
+        <div>
+            <label>NPWP</label>
+            <input type="text" name="npwp">
+        </div>
+        <div>
+            <label>URL Foto</label>
+            <input type="text" name="url_foto">
+        </div>
+        <div>
+            <button type="submit">Register</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}
