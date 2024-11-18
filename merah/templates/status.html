@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>MyPay | Sijarta</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="flex items-center px-6 py-4 gap-2">
+    <div class="grow">
+        <h1 class="text-2xl font-bold">Status Jasa</h1>
+    </div>
+
+    <label class="input input-bordered flex items-center gap-2">
+        <input type="text" class="grow" placeholder="Search" />
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 16 16"
+          fill="currentColor"
+          class="h-4 w-4 opacity-70">
+          <path
+            fill-rule="evenodd"
+            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+            clip-rule="evenodd" />
+        </svg>
+      </label>
+
+    <select class="select select-bordered w-full max-w-xs">
+        <option disabled selected>Status Pesanan</option>
+        <option>Home Cleaning</option>
+        <option>Deep Cleaning</option>
+        <option>Service AC</option>
+        <option>Massage</option>
+        <option>Hair Care</option>
+    </select>
+
+    <a class="btn btn-primary">Search</a>
+</div>
+
+<div class="flex flex-col px-6 py-4 gap-2">
+    <div class="flex flex-row items-center px-3 py-2 bg-base-200 gap-2">
+        <div class="flex flex-col grow">
+            <h1 class="text-xl font-bold mb-1">Daily Cleaning</h1>
+            <div class="flex gap-1">
+                <span class="badge badge-primary text-xs">FrankyRayMS</span>
+                <span class="badge badge-secondary text-xs">Pesan: 11-09-2024</span>
+                <span class="badge badge-secondary text-xs">Kerja: 17-09-2024</span>
+            </div>
+        </div>
+        <div class="flex flex-col items-end gap-1">
+            <p class="font-bold">Selesai</p>
+            <a class="btn btn-primary btn-sm">Update Status</a>
+        </div>
+    </div>
+
+    <div class="flex flex-row items-center px-3 py-2 bg-base-200 gap-2">
+        <div class="flex flex-col grow">
+            <h1 class="text-xl font-bold mb-1">Deep Cleaning</h1>
+            <div class="flex gap-1">
+                <span class="badge badge-primary text-xs">Fadlan</span>
+                <span class="badge badge-secondary text-xs">Pesan: 08-10-2001</span>
+                <span class="badge badge-secondary text-xs">Kerja: 15-11-2001</span>
+            </div>
+        </div>
+        <div class="flex flex-col items-end gap-1">
+            <p class="font-bold">Menunggu Konfirmasi</p>
+            <a class="btn btn-primary btn-sm">Update Status</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

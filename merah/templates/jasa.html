@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>MyPay | Sijarta</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="flex items-center px-6 py-4 gap-2">
+    <div class="grow">
+        <h1 class="text-2xl font-bold">Riwayat Jasa</h1>
+    </div>
+
+    <select class="select select-bordered w-full max-w-xs">
+        <option disabled selected>Kategori</option>
+        <option>Home Cleaning</option>
+        <option>Deep Cleaning</option>
+        <option>Service AC</option>
+        <option>Massage</option>
+        <option>Hair Care</option>
+    </select>
+
+    <select class="select select-bordered w-full max-w-xs" disabled>
+        <option disabled selected>Subkategori</option>
+        <option>-</option>
+        <option>-</option>
+    </select>
+
+    <a class="btn btn-primary">Search</a>
+</div>
+
+<div class="flex flex-col px-6 py-4 gap-2">
+    <div class="flex flex-row items-center px-3 py-2 bg-base-200 gap-2">
+        <div class="flex flex-col grow">
+            <h1 class="text-xl font-bold mb-1">Daily Cleaning</h1>
+            <div class="flex gap-1">
+                <span class="badge badge-primary text-xs">FrankyRayMS</span>
+                <span class="badge badge-secondary text-xs">Pesan: 11-09-2024</span>
+                <span class="badge badge-secondary text-xs">Kerja: 17-09-2024</span>
+            </div>
+        </div>
+        <div class="flex flex-col items-end gap-1">
+            <p class="font-bold">Rp 100.000,00</p>
+            <a class="btn btn-primary btn-sm">Kerjakan Pesanan</a>
+        </div>
+    </div>
+
+    <div class="flex flex-row items-center px-3 py-2 bg-base-200 gap-2">
+        <div class="flex flex-col grow">
+            <h1 class="text-xl font-bold mb-1">Setrika</h1>
+            <div class="flex gap-1">
+                <span class="badge badge-primary text-xs">Fadlan</span>
+                <span class="badge badge-secondary text-xs">Pesan: 08-10-2001</span>
+                <span class="badge badge-secondary text-xs">Kerja: 15-11-2001</span>
+            </div>
+        </div>
+        <div class="flex flex-col items-end gap-1">
+            <p class="font-bold">Rp 80.000,00</p>
+            <a class="btn btn-primary btn-sm">Kerjakan Pesanan</a>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

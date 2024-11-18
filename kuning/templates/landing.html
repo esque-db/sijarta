@@ -7,12 +7,23 @@
 
 {% block content %}
 {% comment %} {% include 'navbar.html' %} {% endcomment %}
-<div>
-    <div>
-        <h2>Sijarta By Esque</h2>
-    <div>
-    <button onclick="location.href='{% url 'kuning:login' %}'">Login</button>
-    <button onclick="location.href='{% url 'kuning:register' %}'">Register</button>
+<div class="h-screen flex flex-col justify-center items-center">
+    <div class="card card-side bg-base-100 shadow-xl">
+        <figure>
+            <img
+                src={% static 'images/sijarta_landing.jpg' %}
+                alt="Sijarta"
+                class="aspect-video"
+                style="width: clamp(300px, 1000px, 1500px);" />
+        </figure>
+        <div class="card-body" style="width: 300px;">
+            <h2 class="text-4xl font-bold">Sijarta</h2>
+            <p>By Esque</p>
+            <div class="flex gap-2">
+                <button onclick="location.href='{% url 'kuning:login' %}'" class="btn btn-primary w-1/2">Login</button>
+                <button onclick="location.href='{% url 'kuning:register' %}'"  class="btn btn-secondary w-1/2">Register</button>
+            </div>
+        </div>
     </div>
 </div>
 
