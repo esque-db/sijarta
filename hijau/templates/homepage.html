@@ -1,33 +1,55 @@
-{% include 'navbar_pengguna.html' %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Kategori Jasa</title>
-</head>
-<body>
-    <h1>Daftar Kategori Jasa</h1>
-    <form method="GET" action="">
-        <label for="kategori">Kategori:</label>
-        <select name="kategori" id="kategori">
-            <option value="">Pilih Kategori</option>
-            {% for kategori in kategori_list %}
-                <option value="{{ kategori }}">{{ kategori }}</option>
-            {% endfor %}
-        </select>
-        <input type="text" name="subkategori" placeholder="Nama Subkategori">
-        <button type="submit">Search</button>
-    </form>
+{% extends 'base.html' %}
+{% load static %}
 
+{% block meta %}
+<title>Kategori Jasa</title>
+{% endblock meta %}
+
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="flex items-center px-6 py-4 gap-2">
+    <div class="grow">
+        <h1 class="text-2xl font-bold">Daftar Kategori Jasa</h1>
+    </div>
+
+    <label class="input input-bordered flex items-center gap-2">
+        <input type="text" class="grow" placeholder="Search" />
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            class="h-4 w-4 opacity-70">
+            <path
+            fill-rule="evenodd"
+            d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+            clip-rule="evenodd" />
+        </svg>
+        </label>
+
+    <select class="select select-bordered w-full max-w-xs">
+        <option disabled selected>Kategori</option>
+        <option>Kategori</option>
+    </select>
+
+    <a class="btn btn-primary">Search</a>
+</div>
+
+<div class="flex flex-col items-center px-6 py-4 gap-2">
     {% for kategori, subkategoris in data.items %}
-        <div>
-            <h2>{{ kategori }}</h2>
-            <ul>
+        <div class="mb-6 w-1/3 flex flex-col items-center">
+            <h2 class="text-2xl font-semibold mb-3">{{ kategori }}</h2>
+            <div class="join join-vertical">
                 {% for subkategori in subkategoris %}
-                    <li><a href="{% url 'hijau:subkategori' kategori=kategori subkategori=subkategori %}">{{ subkategori }}</a></li>
+                    <a href="{% url 'hijau:subkategori' kategori=kategori subkategori=subkategori %}" class="btn join-item">
+                        {{ subkategori }}
+                    </a>
                 {% endfor %}
+            </div>
+            <ul class="list-disc list-inside space-y-2">
             </ul>
         </div>
     {% endfor %}
-</body>
-</html>
+</div>
+
+{% endblock content %}

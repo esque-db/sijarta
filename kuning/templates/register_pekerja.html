@@ -2,66 +2,174 @@
 {% load static %}
 
 {% block meta %}
-<title>Register</title>
+<title>Registration Form</title>
 {% endblock meta %}
 
 {% block content %}
-{% include 'navbar.html' %}
-<div>
-    <div>
-        <h2>Make an Account</h2>
-    <div>
-    <form method="POST">
-        <div>
-            <label>Nama</label>
-            <input type="text" name="nama">
-        </div>
-        <div>
-            <label>Password</label>
-            <input type="password" name="password">
-        </div>
-        <div>
-            <label>Jenis Kelamin</label>
-            <input type="radio" name="jenis_kelamin" value="L"> L
-            <input type="radio" name="jenis_kelamin" value="P"> P
-        </div>
-        <div>
-            <label>NoHP</label>
-            <input type="text" name="nohp">
-        </div>
-        <div>
-            <label>Tanggal Lahir</label>
-            <input type="date" name="tanggal_lahir">
-        </div>
-        <div>
-            <label>Alamat</label>
-            <input type="text" name="alamat">
-        </div>
-        <div>
-            <label>Nama Bank</label>
-            <select name="nama_bank">
-                <option value="GoPay">GoPay</option>
-                <option value="OVO">OVO</option>
-                <option value="Virtual Account BCA">Virtual Account BCA</option>
-                <option value="Virtual Account BNI">Virtual Account BNI</option>
-                <option value="Virtual Account Mandiri">Virtual Account Mandiri</option>
-            </select>
-        </div>
-        <div>
-            <label>No Rekening</label>
-            <input type="text" name="no_rekening">
-        </div>
-        <div>
-            <label>NPWP</label>
-            <input type="text" name="npwp">
-        </div>
-        <div>
-            <label>URL Foto</label>
-            <input type="text" name="url_foto">
-        </div>
-        <div>
-            <button type="submit">Register</button>
-        </div>
-    </form>
+
+<div class="flex items-center justify-center min-h-screen my-5">
+    <div class="w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-center mb-6">Create Your Account</h2>
+
+        <form method="POST" class="space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="role" value="{{ role }}">
+
+            <!-- Common Fields -->
+            <div class="form-control">
+                <label class="label" for="username">
+                    <span class="label-text">Username</span>
+                </label>
+                <input 
+                    type="text" 
+                    name="username" 
+                    id="username" 
+                    class="input input-bordered w-full" 
+                    required 
+                />
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="password1">
+                    <span class="label-text">Password</span>
+                </label>
+                <input 
+                    type="password" 
+                    name="password1" 
+                    id="password1" 
+                    class="input input-bordered w-full" 
+                    required 
+                />
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="password2">
+                    <span class="label-text">Confirm Password</span>
+                </label>
+                <input 
+                    type="password" 
+                    name="password2" 
+                    id="password2" 
+                    class="input input-bordered w-full" 
+                    required 
+                />
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="nama">
+                    <span class="label-text">Nama</span>
+                </label>
+                <input 
+                    type="text" 
+                    name="nama" 
+                    id="nama" 
+                    class="input input-bordered w-full" 
+                />
+            </div>
+
+            <div class="form-control">
+                <span class="label-text">Jenis Kelamin</span>
+                <div class="join w-full">
+                    <input class="join-item btn w-1/2" type="radio" name="jenis_kelamin" value="L" aria-label="Laki-Laki" />
+                    <input class="join-item btn w-1/2" type="radio" name="jenis_kelamin" value="P" aria-label="Perempuan" />
+                </div>
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="nohp">
+                    <span class="label-text">NoHP</span>
+                </label>
+                <input 
+                    type="text" 
+                    name="nohp" 
+                    id="nohp" 
+                    class="input input-bordered w-full" 
+                />
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="tanggal_lahir">
+                    <span class="label-text">Tanggal Lahir</span>
+                </label>
+                <input 
+                    type="date" 
+                    name="tanggal_lahir" 
+                    id="tanggal_lahir" 
+                    class="input input-bordered w-full" 
+                />
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="alamat">
+                    <span class="label-text">Alamat</span>
+                </label>
+                <input 
+                    type="text" 
+                    name="alamat" 
+                    id="alamat" 
+                    class="input input-bordered w-full" 
+                />
+            </div>
+
+            <!-- Pekerja-specific fields -->
+            <div class="form-control">
+                <label class="label" for="nama_bank">
+                    <span class="label-text">Nama Bank</span>
+                </label>
+                <select name="nama_bank" id="nama_bank" class="select select-bordered w-full">
+                    <option value="GoPay">GoPay</option>
+                    <option value="OVO">OVO</option>
+                    <option value="Virtual Account BCA">Virtual Account BCA</option>
+                    <option value="Virtual Account BNI">Virtual Account BNI</option>
+                    <option value="Virtual Account Mandiri">Virtual Account Mandiri</option>
+                </select>
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="no_rekening">
+                    <span class="label-text">No Rekening</span>
+                </label>
+                <input 
+                    type="text" 
+                    name="no_rekening" 
+                    id="no_rekening" 
+                    class="input input-bordered w-full" 
+                />
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="npwp">
+                    <span class="label-text">NPWP</span>
+                </label>
+                <input 
+                    type="text" 
+                    name="npwp" 
+                    id="npwp" 
+                    class="input input-bordered w-full" 
+                />
+            </div>
+
+            <div class="form-control">
+                <label class="label" for="url_foto">
+                    <span class="label-text">URL Foto</span>
+                </label>
+                <input 
+                    type="text" 
+                    name="url_foto" 
+                    id="url_foto" 
+                    class="input input-bordered w-full" 
+                />
+            </div>
+
+            <div class="form-control mt-6">
+                <button 
+                    type="submit" 
+                    class="btn btn-primary w-full">
+                    Register
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
+
 {% endblock content %}
