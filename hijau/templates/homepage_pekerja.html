@@ -1,0 +1,33 @@
+{% include 'navbar_pekerja.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kategori Jasa</title>
+</head>
+<body>
+    <h1>Daftar Kategori Jasa</h1>
+    <form method="GET" action="">
+        <label for="kategori">Kategori:</label>
+        <select name="kategori" id="kategori">
+            <option value="">Pilih Kategori</option>
+            {% for kategori in kategori_list %}
+                <option value="{{ kategori }}">{{ kategori }}</option>
+            {% endfor %}
+        </select>
+        <input type="text" name="subkategori" placeholder="Nama Subkategori">
+        <button type="submit">Search</button>
+    </form>
+
+    {% for kategori, subkategoris in data.items %}
+        <div>
+            <h2>{{ kategori }}</h2>
+            <ul>
+                {% for subkategori in subkategoris %}
+                    <li><a href="{% url 'hijau:subkategoripekerja' kategori=kategori subkategori=subkategori%}">{{ subkategori }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+</body>
+</html>
