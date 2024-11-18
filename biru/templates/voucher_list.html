@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar_pengguna.html' %}
+
+<div class="container mx-auto px-4">
+  <h1 class="text-3xl font-bold text-center my-6">DISKON</h1>
+
+  <!-- Bagian Voucher -->
+  <div class="mb-8">
+    <h2 class="text-2xl font-semibold mb-4">Voucher</h2>
+    <div class="overflow-x-auto">
+      <table class="table-auto border-collapse w-full text-left">
+        <thead>
+          <tr class="bg-gray-100 border-b">
+            <th class="px-4 py-2">Kode</th>
+            <th class="px-4 py-2">Potongan</th>
+            <th class="px-4 py-2">Harga</th>
+            <th class="px-4 py-2"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for v in vouchers %}
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-2">{{ v.kode }}</td>
+            <td class="px-4 py-2">{{ v.diskon }}</td>
+            <td class="px-4 py-2">Rp{{ v.harga }}</td>
+            <td class="px-4 py-2">
+              <form action="{% url 'voucher_buy' v.id %}" method="post">
+                {% csrf_token %}
+                <button
+                  type="submit"
+                  class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                  Beli
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Bagian Promo -->
+  <div>
+    <h2 class="text-2xl font-semibold mb-4">Promo</h2>
+    <div class="overflow-x-auto">
+      <table class="table-auto border-collapse w-full text-left">
+        <thead>
+          <tr class="bg-gray-100 border-b">
+            <th class="px-4 py-2">Kode</th>
+            <th class="px-4 py-2">Tanggal Akhir Berlaku</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for p in promos %}
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-2">{{ p.kode }}</td>
+            <td class="px-4 py-2">{{ p.tanggal_akhir }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Notifikasi Sukses -->
+<div
+  id="modal-sukses"
+  class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden"
+>
+  <div class="bg-white p-6 rounded shadow-lg text-center w-80">
+    <h2 class="text-2xl font-bold text-green-600 mb-4">SUKSES</h2>
+    <p class="mb-4">
+      Selamat! Anda berhasil membeli voucher kode <span id="kode-voucher"></span>.
+      <br />Voucher ini berlaku hingga <span id="tanggal-berlaku"></span>
+      <br />dengan kuota penggunaan sebanyak <span id="kuota"></span> kali.
+    </p>
+    <button
+      onclick="tutupModal('modal-sukses')"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    >
+      Button Tutup
+    </button>
+  </div>
+</div>
+
+<!-- Modal Notifikasi Gagal -->
+<div
+  id="modal-gagal"
+  class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden"
+>
+  <div class="bg-white p-6 rounded shadow-lg text-center w-80">
+    <h2 class="text-2xl font-bold text-red-600 mb-4">GAGAL</h2>
+    <p class="mb-4">Maaf, saldo Anda tidak cukup untuk membeli voucher ini.</p>
+    <button
+      onclick="tutupModal('modal-gagal')"
+      class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+    >
+      Button Tutup
+    </button>
+  </div>
+</div>
+
+<script>
+  function tampilkanModalSukses(kode, tanggal, kuota) {
+    document.getElementById("kode-voucher").innerText = kode;
+    document.getElementById("tanggal-berlaku").innerText = tanggal;
+    document.getElementById("kuota").innerText = kuota;
+    document.getElementById("modal-sukses").classList.remove("hidden");
+  }
+
+  function tampilkanModalGagal() {
+    document.getElementById("modal-gagal").classList.remove("hidden");
+  }
+
+  function tutupModal(modalId) {
+    document.getElementById(modalId).classList.add("hidden");
+  }
+
+  // Cek apakah modal sukses atau gagal perlu ditampilkan
+  {% if modal_sukses %}
+    tampilkanModalSukses('{{ kode }}', '{{ tanggal }}', '{{ kuota }}');
+  {% elif modal_gagal %}
+    tampilkanModalGagal();
+  {% endif %}
+</script>
+{% endblock %}
