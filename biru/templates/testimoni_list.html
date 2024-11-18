@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% include 'navbar_pengguna.html' %}
+
+<div class="container mx-auto px-4">
+  <h1 class="text-3xl font-bold text-center my-6">Daftar Testimoni</h1>
+
+  <div class="overflow-x-auto">
+    <table class="table-auto border-collapse w-full text-left">
+      <thead>
+        <tr class="bg-gray-100 border-b">
+          <th class="px-4 py-2">Nama Pengguna</th>
+          <th class="px-4 py-2">Teks Testimoni</th>
+          <th class="px-4 py-2">Tanggal</th>
+          <th class="px-4 py-2">Nama Pekerja</th>
+          <th class="px-4 py-2">Rating</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for t in testimoni %}
+        <tr class="border-b hover:bg-gray-50">
+          <td class="px-4 py-2">{{ t.user }}</td>
+          <td class="px-4 py-2">{{ t.komentar }}</td>
+          <td class="px-4 py-2">{{ t.tanggal }}</td>
+          <td class="px-4 py-2">{{ t.nama_pekerja }}</td>
+          <td class="px-4 py-2">{{ t.rating }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="mt-6 text-right">
+    <a
+      href="{% url 'testimoni_add' %}"
+      class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+    >
+      Tambah Testimoni
+    </a>
+  </div>
+</div>
+{% endblock %}
