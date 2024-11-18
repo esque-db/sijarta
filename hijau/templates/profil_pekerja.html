@@ -1,68 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profil Pekerja</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            background-color: #f9f9f9;
-        }
-        .container {
-            background: white;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            padding: 20px;
-            width: 350px;
-            text-align: center;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-        .avatar {
-            width: 100px;
-            height: 100px;
-            background-color: #ccc;
-            border-radius: 50%;
-            margin: 0 auto 20px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .avatar img {
-            max-width: 100%;
-            border-radius: 50%;
-        }
-        p {
-            margin: 10px 0;
-            font-size: 14px;
-        }
-        .label {
-            font-weight: bold;
-        }
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Profil Pekerja</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+    }
+    .container {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        width: 350px;
+        text-align: center;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+    h1 {
+        font-size: 20px;
+        margin-bottom: 20px;
+    }
+    .avatar {
+        width: 100px;
+        height: 100px;
+        background-color: #ccc;
+        border-radius: 50%;
+        margin: 0 auto 20px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .avatar img {
+        max-width: 100%;
+        border-radius: 50%;
+    }
+    p {
+        margin: 10px 0;
+        font-size: 14px;
+    }
+    .label {
+        font-weight: bold;
+    }
     </style>
-</head>
-<body>
-    <div class="container">
-        <h1>PROFIL PEKERJA</h1>
+{% endblock meta %}
+
+{% block content %}
+{% comment %} {% include 'navbar.html' %} {% endcomment %}
+<div class="flex items-center justify-center">
+    <div class="flex flex-col items-center bg-white px-6 py-2 gap-2 w-full">
+        <h1 class="text-xl font-bold">PROFIL PEKERJA</h1>
         <div class="avatar">
             <!-- Gambar avatar pekerja -->
             <img src="https://via.placeholder.com/100" alt="Avatar">
         </div>
-        <p><span class="label">Nama:</span> {{ pekerja.nama }}</p>
-        <p><span class="label">Rating:</span> {{ pekerja.rating }}/10</p>
-        <p><span class="label">Jumlah pesanan selesai:</span> {{ pekerja.pesanan_selesai }}</p>
-        <p><span class="label">No HP:</span> {{ pekerja.no_hp }}</p>
-        <p><span class="label">Tanggal Lahir:</span> {{ pekerja.tanggal_lahir }}</p>
-        <p><span class="label">Alamat:</span> {{ pekerja.alamat }}</p>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Nama</div>
+            <div class="">{{ pekerja.nama }}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Rating</div>
+            <div class="">{{ pekerja.rating }}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Jumlah Pesanan Selesai</div>
+            <div class="">{{ pekerja.pesanan_selesai }}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">No HP</div>
+            <div class="">{{ pekerja.no_hp }}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Tanggal Lahir</div>
+            <div class="">{{ pekerja.tanggal_lahir }}</div>
+        </div>
+        <div class="w-full">
+            <div class="font-semibold" style="min-width: 100px;">Alamat</div>
+            <div class="">{{ pekerja.alamat }}</div>
+        </div>
     </div>
-</body>
-</html>
+</div>
+{% endblock content %}
