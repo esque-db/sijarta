@@ -1,45 +1,31 @@
-DELIMITER $$
-
-CREATE PROCEDURE RefundSaldoMyPay(IN orderId UUID)
+CREATE OR REPLACE FUNCTION batalkan_pesanan() RETURNS TRIGGER 
+AS $$
+DECLARE
+    pelanggan_id UUID;
+    total_biaya NUMERIC;
+    id_status_dibatalkan INTEGER;
+    id_status_mencari_pekerja INTEGER;
 BEGIN
-    DECLARE orderTotal DECIMAL(10,2);
-    DECLARE userId UUID;
-
-    SELECT TotalBiaya, IdPelanggan
-    INTO orderTotal, userId
-    FROM TR_PEMESANAN_JASA
-    WHERE Id = orderId;
-
-    DECLARE statusId UUID;
-    SELECT Id INTO statusId
-    FROM STATUS_PESANAN
-    WHERE Status = 'Mencari Pekerja Terdekat';
-
-    IF EXISTS (SELECT 1 FROM TR_PEMESANAN_STATUS WHERE IdTrPemesanan = orderId AND IdStatus = statusId) THEN
-        UPDATE "USER"
-        SET SaldoMyPay = SaldoMyPay + orderTotal
-        WHERE Id = userId;
-
-        INSERT INTO TR_MYPAY (Id, UserId, Tgl, Nominal, KategoriId)
-        VALUES (UUID(), userId, CURDATE(), orderTotal, (SELECT Id FROM KATEGORI_TR_MYPAY WHERE Nama = 'Pengembalian Saldo'));
-    ELSE
-        SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Pesanan tidak dapat dibatalkan karena status tidak sesuai';
+    SELECT Id INTO id_status_dibatalkan FROM STATUS_PESANAN WHERE Keterangan = 'Dibatalkan';
+    SELECT Id INTO id_status_mencari_pekerja FROM STATUS_PESANAN WHERE Keterangan = 'Mencari Pekerja Terdekat';
+    
+    IF NEW.IdStatus = id_status_dibatalkan THEN
+        IF OLD.IdStatus = id_status_mencari_pekerja THEN
+            SELECT IdPelanggan, TotalBiaya INTO pelanggan_id, total_biaya
+            FROM TR_PEMESANAN_JASA
+            WHERE Id = NEW.IdTrPemesanan;
+            
+            UPDATE MYPAY
+            SET Saldo = Saldo + total_biaya
+            WHERE Id = pelanggan_id;
+        END IF;
     END IF;
-END $$
+    
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
 
-DELIMITER ;
-
-DELIMITER $$
-
-CREATE TRIGGER AfterCancelOrder
+CREATE TRIGGER trg_batalkan_pesanan
 AFTER UPDATE ON TR_PEMESANAN_STATUS
 FOR EACH ROW
-BEGIN
-    -- Periksa apakah status pesanan berubah menjadi 'Dibatalkan'
-    IF NEW.IdStatus = (SELECT Id FROM STATUS_PESANAN WHERE Status = 'Dibatalkan') THEN
-        -- Panggil stored procedure untuk mengembalikan saldo
-        CALL RefundSaldoMyPay(NEW.IdTrPemesanan);
-    END IF;
-END $$
-
-DELIMITER ;
+EXECUTE FUNCTION batalkan_pesanan();
