@@ -7,11 +7,11 @@
       <!-- Navbar for Pengguna -->
       <a href='#'>Role: Pengguna</a>
       <label>Arta</label>
-      <a href='#'>Homepage</a>
-      <a href='#'>MyPay</a>
-      <a href='#'>Kelola Pesanan Saya</a>
-      <a href='#'>Diskon</a>
-      <a href='#'>Profile</a>
+      <a href="{% url 'hijau:homepage' %}">Homepage</a>
+      <a href="{% url 'merah:show_mypay' %}">MyPay</a>
+      <a href="{% url 'hijau:view_pemesanan_jasa' %}">Kelola Pesanan Saya</a>
+      <a href="{% url 'biru:voucher_list' %}">Diskon</a>
+      <a href="{% url 'kuning:profile' %}">Profile</a>
       <a href="{% url 'kuning:logout' %}">Logout</a>
     </div>
   </div>
