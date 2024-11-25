@@ -26,7 +26,7 @@
             <td class="px-4 py-2">{{ v.diskon }}</td>
             <td class="px-4 py-2">Rp{{ v.harga }}</td>
             <td class="px-4 py-2">
-              <form action="{% url 'voucher_buy' v.id %}" method="post">
+              <form action="{% url 'biru:voucher_buy' v.id %}" method="post">
                 {% csrf_token %}
                 <button
                   type="submit"

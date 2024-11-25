@@ -7,11 +7,11 @@
       <!-- Navbar for Pekerja -->
       <a href='#'>Role: Pekerja</a>
       <label>Arta</label>
-      <a href='#'>Homepage</a>
-      <a href='#'>Kelola Pekerjaan Saya</a>
-      <a href='#'>Kelola Status Pekerjaan</a>
-      <a href='#'>MyPay</a>
-      <a href='#'>Profile</a>
+      <a href="{% url 'hijau:homepage_pekerja' %}">Homepage</a>
+      <a href="{% url 'merah:show_jasa' %}">Kelola Pekerjaan Saya</a>
+      <a href="{% url 'merah:show_status' %}">Kelola Status Pekerjaan</a>
+      <a href="{% url 'merah:show_mypay' %}">MyPay</a>
+      <a href="{% url 'kuning:profile' %}">Profile</a>
       <a href="{% url 'kuning:logout' %}">Logout</a>
     </div>
   </div>
